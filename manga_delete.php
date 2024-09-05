@@ -2,6 +2,9 @@
 session_start();
 
 require_once(__DIR__ . '/isConnect.php');
+require_once(__DIR__ . '/config/mysql.php');
+require_once(__DIR__ . '/databaseconnect.php');
+require_once(__DIR__ . '/functions.php'); // Assurez-vous que isAdmin() est dans ce fichier
 
 /**
  * On ne traite pas les super globales provenant de l'utilisateur directement,
@@ -12,6 +15,24 @@ $getData = $_GET;
 if (!isset($getData['id']) || !is_numeric($getData['id'])) {
     echo('Il faut un identifiant pour supprimer le manga.');
     return;
+}
+
+$retrieveMangaStatement = $mysqlClient->prepare('SELECT * FROM mangas WHERE manga_id = :id');
+$retrieveMangaStatement->execute([
+    'id' => (int)$getData['id'],
+]);
+$manga = $retrieveMangaStatement->fetch(PDO::FETCH_ASSOC);
+
+// Vérifier que le manga existe
+if (!$manga) {
+    echo "Manga introuvable.";
+    exit();
+}
+
+// Vérifier que l'utilisateur est autorisé à supprimer (admin ou auteur du manga)
+if (!isAdmin() && $manga['author'] !== $_SESSION['LOGGED_USER']['email']) {
+    echo "Vous n'avez pas les droits pour supprimer cet article.";
+    exit();
 }
 ?>
 

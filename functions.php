@@ -40,3 +40,7 @@ function redirectToUrl(string $url): never
     header("Location: {$url}");
     exit();
 }
+
+function isAdmin() {
+    return isset($_SESSION['LOGGED_USER']) && isset($_SESSION['LOGGED_USER']['role']) && $_SESSION['LOGGED_USER']['role'] === 'admin';
+}

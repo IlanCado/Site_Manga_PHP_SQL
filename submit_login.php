@@ -17,20 +17,24 @@ if (isset($postData['email']) && isset($postData['password'])) {
         header('Location: login.php');
         exit();
     } else {
-        // Vérification des identifiants dans la liste des utilisateurs
-        foreach ($users as $user) {
-            // Vérification du mot de passe avec password_verify (mot de passe hashé)
-            if ($user['email'] === $postData['email'] && password_verify($postData['password'], $user['password'])) {
-                // Enregistrement des infos utilisateur dans la session
-                $_SESSION['LOGGED_USER'] = [
-                    'email' => $user['email'],
-                    'user_id' => $user['user_id'],
-                    'full_name' => $user['full_name'],  // Ajout du nom complet dans la session
-                ];
-                // Redirection vers la page d'accueil après connexion
-                header('Location: index.php');
-                exit();
-            }
+        // Requête pour récupérer l'utilisateur à partir de la base de données
+        $checkUserStatement = $mysqlClient->prepare('SELECT * FROM users WHERE email = :email');
+        $checkUserStatement->execute(['email' => $postData['email']]);
+        $user = $checkUserStatement->fetch(PDO::FETCH_ASSOC);
+
+        // Vérification si l'utilisateur existe et que le mot de passe est correct
+        if ($user && password_verify($postData['password'], $user['password'])) {
+            // Enregistrement des infos utilisateur dans la session avec le rôle
+            $_SESSION['LOGGED_USER'] = [
+                'email' => $user['email'],
+                'user_id' => $user['user_id'],
+                'full_name' => $user['full_name'],
+                'role' => isset($user['role']) ? $user['role'] : 'user', // Stocker le rôle dans la session
+            ];
+
+            // Redirection vers la page d'accueil après connexion
+            header('Location: index.php');
+            exit();
         }
 
         // Si les informations ne permettent pas d'identifier l'utilisateur
