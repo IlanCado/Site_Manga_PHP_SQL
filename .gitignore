@@ -1,2 +1,11 @@
-*
-!.gitignore
+# Ignorer les fichiers temporaires et non nécessaires
+*.log
+*.tmp
+*.bak
+*.swp
+.DS_Store
+/vendor
+/node_modules
+
+# Ne pas ignorer tous les fichiers
+!*
