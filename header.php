@@ -8,7 +8,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <?php if (isset($_SESSION['LOGGED_USER'])) : ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="manga_create.php">Ajoutez un manga !</a>
+                        <a class="nav-link" href="manga_create.php">Ajoutez un manga</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">Déconnexion</a>
