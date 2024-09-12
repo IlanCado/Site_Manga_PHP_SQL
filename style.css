@@ -1,0 +1,48 @@
+/* --------- LIKES --------- */
+.like-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.like-button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+}
+
+/* --------- RATINGS --------- */
+.rating {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    font-size: 2rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.rating input:checked ~ label {
+    color: #FFD700;
+}
+
+.rating input:checked + label {
+    color: #FFD700;
+}
+
+/* Styles pour la disposition mobile */
+@media (max-width: 768px) {
+    .rating label {
+        font-size: 1.5rem;
+    }
+}

@@ -24,7 +24,7 @@ require_once(__DIR__ . '/functions.php');
 
         <?php foreach (getmangas($mangas) as $manga) : ?>
             <article>
-                <h3><a href="mangas_read.php?id=<?php echo($manga['manga_id']); ?>"><?php echo($manga['title']); ?></a></h3>
+                <h3><a href="manga_detail.php?id=<?php echo($manga['manga_id']); ?>"><?php echo($manga['title']); ?></a></h3>
                 <div><?php echo $manga['synopsis']; ?></div>
                 <i><?php echo displayAuthor($manga['author'], $users); ?></i>
                <?php if (isset($_SESSION['LOGGED_USER']) && ($manga['author'] === $_SESSION['LOGGED_USER']['email'] || isAdmin())) : ?>
