@@ -12,8 +12,11 @@ require_once(__DIR__ . '/header.php');  // Inclusion du menu de navigation
     <title>Connexion utilisateur</title>
     <!-- Lien vers le CSS (Bootstrap) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+
 </head>
 <body>
+    <br>
     <div class="container">
         <h1 class="my-4">Connexion</h1>
 
@@ -45,7 +48,7 @@ require_once(__DIR__ . '/header.php');  // Inclusion du menu de navigation
             </div>
         <?php endif; ?>
     </div>
-
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <?php require_once(__DIR__ . '/footer.php'); ?>  <!-- Inclusion du footer -->
 </body>
 </html>
