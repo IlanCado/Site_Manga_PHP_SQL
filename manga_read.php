@@ -11,7 +11,7 @@ require_once(__DIR__ . '/databaseconnect.php');
 $getData = $_GET;
 
 if (!isset($getData['id']) || !is_numeric($getData['id'])) {
-    echo('La manga n\'existe pas');
+    echo('Le manga n\'existe pas');
     return;
 }
 
@@ -27,7 +27,7 @@ $retrievemangaWithCommentsStatement->execute([
 $mangaWithComments = $retrievemangaWithCommentsStatement->fetchAll(PDO::FETCH_ASSOC);
 
 if ($mangaWithComments === []) {
-    echo('La manga n\'existe pas');
+    echo('Le manga n\'existe pas');
     return;
 }
 $retrieveAverageRatingStatement = $mysqlClient->prepare('SELECT ROUND(AVG(c.review),1) as rating FROM mangas r LEFT JOIN comments c on r.manga_id = c.manga_id WHERE r.manga_id = :id');

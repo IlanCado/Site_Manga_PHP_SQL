@@ -84,11 +84,11 @@ $user = $userStatement->fetch(PDO::FETCH_ASSOC);
             <form action="submit_rating.php" method="POST" id="ratingForm">
                 <input type="hidden" name="manga_id" value="<?php echo $manga_id; ?>">
                 <div class="rating">
-                    <input type="radio" name="rating" id="star5" value="5"><label for="star5">5 &#9733;</label>
-                    <input type="radio" name="rating" id="star4" value="4"><label for="star4">4 &#9733;</label>
-                    <input type="radio" name="rating" id="star3" value="3"><label for="star3">3 &#9733;</label>
-                    <input type="radio" name="rating" id="star2" value="2"><label for="star2">2 &#9733;</label>
-                    <input type="radio" name="rating" id="star1" value="1"><label for="star1">1 &#9733;</label>
+                    <input type="radio" name="rating" id="star5" value="5"><label for="star5"> &#9733;</label>
+                    <input type="radio" name="rating" id="star4" value="4"><label for="star4"> &#9733;</label>
+                    <input type="radio" name="rating" id="star3" value="3"><label for="star3"> &#9733;</label>
+                    <input type="radio" name="rating" id="star2" value="2"><label for="star2"> &#9733;</label>
+                    <input type="radio" name="rating" id="star1" value="1"><label for="star1"> &#9733;</label>
                 </div>
                 <button type="submit" class="btn btn-primary mt-2">Soumettre</button>
             </form>

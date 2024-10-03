@@ -215,3 +215,52 @@ footer a:hover {
     margin: 0 auto; /* Centre l'image */
 }
 
+.copy {
+
+    color: black;
+}
+
+/* ----------- Footer Styles ----------- */
+
+/* Style personnalisé pour le footer */
+.custom-footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa; /* Couleur de fond claire */
+    padding: 10px 0;
+    margin-top: auto;
+    font-size: 14px;
+}
+
+/* Classe pour maintenir le footer en bas de la page même s'il n'y a pas assez de contenu */
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    margin: 0;
+}
+
+.container {
+    flex: 1; /* Le contenu principal s'étendra et le footer restera en bas */
+}
+
+/* Styles pour le copyright en noir et sans soulignement */
+.custom-footer .copy {
+    color: #000;
+    text-decoration: none;
+    margin-right: 5px;
+}
+
+/* Style pour l'hyperlien "Ilan Cado" */
+.custom-footer .link-underline {
+    text-decoration: underline;
+    color: inherit;
+}
+
+.custom-footer .link-underline:hover {
+    color: #007BFF; /* Change de couleur au survol */
+}
