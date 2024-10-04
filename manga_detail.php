@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 require_once(__DIR__ . '/config/mysql.php');
@@ -59,6 +60,7 @@ $userStatement = $mysqlClient->prepare('SELECT full_name FROM users WHERE email 
 $userStatement->execute(['email' => $manga['author']]);
 $user = $userStatement->fetch(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -72,6 +74,35 @@ $user = $userStatement->fetch(PDO::FETCH_ASSOC);
 <body class="d-flex flex-column min-vh-100">
     <div class="container">
         <?php require_once(__DIR__ . '/header.php'); ?>
+
+        <!-- Affichage des messages d'erreur ou de succès -->
+        <?php if (isset($_GET['error'])): ?>
+            <div class="alert alert-danger">
+                <?php
+                switch ($_GET['error']) {
+                    case 'empty_content':
+                        echo "Le commentaire ne peut pas être vide.";
+                        break;
+                    case 'invalid_length':
+                        echo "Le commentaire doit contenir entre 1 et 300 caractères.";
+                        break;
+                    case 'missing_manga_id':
+                        echo "Identifiant du manga manquant.";
+                        break;
+                    case 'database_error':
+                        echo "Une erreur est survenue lors de l'enregistrement du commentaire. Veuillez réessayer.";
+                        break;
+                    default:
+                        echo "Erreur inconnue.";
+                        break;
+                }
+                ?>
+            </div>
+        <?php elseif (isset($_GET['success']) && $_GET['success'] == 'comment_added'): ?>
+            <div class="alert alert-success">
+                Votre commentaire a été ajouté avec succès !
+            </div>
+        <?php endif; ?>
 
         <h1><?php echo htmlspecialchars($manga['title']); ?></h1>
         <p><?php echo nl2br(htmlspecialchars($manga['synopsis'])); ?></p>
@@ -100,7 +131,12 @@ $user = $userStatement->fetch(PDO::FETCH_ASSOC);
         <?php foreach ($comments as $comment): ?>
             <div class="comment mb-3">
                 <p><strong><?php echo htmlspecialchars($comment['full_name']); ?>:</strong> <?php echo htmlspecialchars($comment['content']); ?></p>
-                <p><small>Posté le <?php echo $comment['created_at']; ?></small></p>
+                <p><small>
+                     <?php
+                          $date = DateTime::createFromFormat('Y-m-d H:i:s', $comment['created_at']);
+                            echo "Posté le " . $date->format('d/m/Y à H:i:s');
+                         ?>
+                </small></p>
 
                 <!-- Boutons pour répondre, éditer, voir les réponses et supprimer -->
                 <button class="btn btn-sm btn-outline-primary" onclick="toggleReplyForm(<?php echo $comment['comment_id']; ?>)">Répondre</button>

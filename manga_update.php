@@ -43,10 +43,8 @@ if (!isAdmin() && $manga['author'] !== $_SESSION['LOGGED_USER']['email']) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Site de mangas - Édition de manga</title>
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"rel="stylesheet">
-        <link href="style.css" rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 </head>
 <body class="d-flex flex-column min-vh-100">
     <div class="container">
@@ -60,14 +58,17 @@ if (!isAdmin() && $manga['author'] !== $_SESSION['LOGGED_USER']['email']) {
             </div>
             <div class="mb-3">
                 <label for="title" class="form-label">Titre du manga</label>
-                <input type="text" class="form-control" id="title" name="title" aria-describedby="title-help" value="<?php echo htmlspecialchars($manga['title']); ?>">
-                <div id="title-help" class="form-text">Choisissez un titre percutant !</div>
+                <!-- Ajout des attributs minlength et maxlength -->
+                <input type="text" class="form-control" id="title" name="title" minlength="3" maxlength="50" aria-describedby="title-help" value="<?php echo htmlspecialchars($manga['title']); ?>" required>
+                <div id="title-help" class="form-text">Le titre doit comporter entre 3 et 50 caractères.</div>
             </div>
             <div class="mb-3">
                 <label for="synopsis" class="form-label">Description du manga</label>
-                <textarea class="form-control" placeholder="Seulement du contenu vous appartenant ou libre de droits." id="synopsis" name="synopsis"><?php echo htmlspecialchars($manga['synopsis']); ?></textarea>
+                <!-- Ajout des attributs minlength et maxlength -->
+                <textarea class="form-control" placeholder="Seulement du contenu vous appartenant ou libre de droits." id="synopsis" name="synopsis" minlength="10" maxlength="500" required><?php echo htmlspecialchars($manga['synopsis']); ?></textarea>
+                <div id="synopsis-help" class="form-text">La description doit comporter entre 10 et 500 caractères.</div>
             </div>
-            
+
             <!-- Bouton vert pour envoyer et bouton rouge pour revenir à l'accueil -->
             <button type="submit" class="btn btn-success">Envoyer</button>
             <a href="index.php" class="btn btn-danger">Revenir à l'accueil</a>

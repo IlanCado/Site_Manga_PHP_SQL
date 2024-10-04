@@ -5,7 +5,6 @@ require_once(__DIR__ . '/databaseconnect.php');
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['LOGGED_USER'])) {
-    // Si non connecté, rediriger vers la page de connexion
     header('Location: login.php');
     exit();
 }
@@ -14,17 +13,22 @@ if (!isset($_SESSION['LOGGED_USER'])) {
 $postData = $_POST;
 
 if (!isset($postData['manga_id']) || !is_numeric($postData['manga_id'])) {
-    echo('Il faut un identifiant de manga pour poster un commentaire.');
-    return;
+    header('Location: manga_detail.php?id=' . $manga_id . '&error=missing_manga_id');
+    exit();
 }
 
 $manga_id = (int)$postData['manga_id'];
 $content = trim($postData['content']);
 $parent_id = isset($postData['parent_id']) && is_numeric($postData['parent_id']) ? (int)$postData['parent_id'] : null;
 
-// Vérifier que le commentaire n'est pas vide
+// Vérifier que le commentaire n'est pas vide et respecter la longueur
 if (empty($content)) {
     header('Location: manga_detail.php?id=' . $manga_id . '&error=empty_content');
+    exit();
+}
+
+if (strlen($content) < 1 || strlen($content) > 300) {
+    header('Location: manga_detail.php?id=' . $manga_id . '&error=invalid_length');
     exit();
 }
 
@@ -45,11 +49,10 @@ try {
         'parent_id' => $parent_id
     ]);
     
-    // Rediriger vers la page des détails du manga avec un message de succès
-    header('Location: manga_detail.php?id=' . $manga_id . '&success=1');
+    header('Location: manga_detail.php?id=' . $manga_id . '&success=comment_added');
     exit();
 } catch (Exception $e) {
-    echo 'Erreur : ' . $e->getMessage();
+    header('Location: manga_detail.php?id=' . $manga_id . '&error=database_error');
     exit();
 }
 ?>

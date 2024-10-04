@@ -11,7 +11,13 @@ if (!isset($_SESSION['LOGGED_USER'])) {
 
 $comment_id = (int)$_POST['comment_id'];
 $manga_id = (int)$_POST['manga_id'];
-$content = $_POST['content'];
+$content = trim($_POST['content']);
+
+// Vérifier la longueur du commentaire
+if (strlen($content) < 1 || strlen($content) > 300) {
+    header('Location: manga_detail.php?id=' . $manga_id . '&error=invalid_length');
+    exit();
+}
 
 // Récupérer le commentaire pour vérifier son auteur
 $commentStatement = $mysqlClient->prepare('SELECT user_id FROM comments WHERE comment_id = :comment_id');
@@ -34,3 +40,4 @@ if ($comment['user_id'] === $_SESSION['LOGGED_USER']['user_id'] || $_SESSION['LO
     header('Location: manga_detail.php?id=' . $manga_id . '&error=unauthorized');
 }
 exit();
+?>
