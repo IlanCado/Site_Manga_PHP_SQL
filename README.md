@@ -1,15 +1,9 @@
 # Site Manga
 
 **Description :**
-Le projet *Site Manga* est une application web en PHP permettant la gestion et l'interaction avec du contenu manga. Les principales fonctionnalités incluent l'authentification utilisateur, la gestion des mangas (CRUD), un système de commentaires et de likes, des notations, ainsi qu'un système de contact. La base de données MySQL est utilisée pour stocker les données.
+Le projet *Mangaverse* est une application web en PHP permettant la gestion et l'interaction avec du contenu manga. Les principales fonctionnalités incluent l'authentification utilisateur, la gestion des mangas (CRUD), un système de commentaires et de likes, des notations, ainsi qu'un système de contact. La base de données MySQL est utilisée pour stocker les données.
 
 ## Structure des dossiers et fichiers
-
-### Fichiers principaux
-- `back.png` : Image utilisée pour le fond du site.
-- `logo.png` : Logo de l'application.
-- `favicon.ico` : Icône affichée dans l'onglet du navigateur.
-- `style.css` : Feuille de style principale gérant l'apparence du site.
 
 ### Fichiers PHP
 
@@ -58,3 +52,10 @@ Le projet *Site Manga* est une application web en PHP permettant la gestion et l
 
 ### Base de données
 - `partage_de_mangas.sql` : Contient la structure des tables pour l'initialisation de la base de données MySQL.
+
+
+### Fichiers assets
+- `back.png` : Image utilisée pour le fond du site.
+- `logo.png` : Logo de l'application.
+- `favicon.ico` : Icône affichée dans l'onglet du navigateur.
+- `style.css` : Feuille de style principale gérant l'apparence du site.
