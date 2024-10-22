@@ -22,8 +22,19 @@ if (
     return;
 }
 
+/**
+ * @var string $comment Le commentaire fourni par l'utilisateur, nettoyé pour éviter les balises HTML.
+ */
 $comment = trim(strip_tags($postData['comment']));
+
+/**
+ * @var int $mangaId L'identifiant du manga fourni par l'utilisateur.
+ */
 $mangaId = (int)$postData['manga_id'];
+
+/**
+ * @var int $review La note donnée par l'utilisateur, convertie en entier.
+ */
 $review = (int)$postData['review'];
 
 // Validation de la note
@@ -39,7 +50,11 @@ if ($validationResult !== true) {
     return;
 }
 
-// Faire l'insertion en base
+/**
+ * Insertion du commentaire en base de données.
+ *
+ * @var PDOStatement $insertComment La requête préparée pour insérer un commentaire dans la base de données.
+ */
 $insertComment = $mysqlClient->prepare('INSERT INTO comments(comment, manga_id, user_id, review) VALUES (:comment, :manga_id, :user_id, :review)');
 $insertComment->execute([
     'comment' => $comment,
@@ -47,7 +62,6 @@ $insertComment->execute([
     'user_id' => $_SESSION['LOGGED_USER']['user_id'],
     'review' => $review,
 ]);
-
 ?>
 
 <!DOCTYPE html>

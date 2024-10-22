@@ -4,11 +4,15 @@ session_start();
 require_once(__DIR__ . '/isConnect.php');
 require_once(__DIR__ . '/config/mysql.php');
 require_once(__DIR__ . '/databaseconnect.php');
-require_once(__DIR__ . '/functions.php'); // Assurez-vous que isAdmin() est dans ce fichier
+require_once(__DIR__ . '/functions.php');
 
 /**
  * On ne traite pas les super globales provenant de l'utilisateur directement,
  * ces données doivent être testées et vérifiées.
+ */
+
+/**
+ * @var array $getData Tableau contenant les paramètres GET de l'URL.
  */
 $getData = $_GET;
 
@@ -17,10 +21,17 @@ if (!isset($getData['id']) || !is_numeric($getData['id'])) {
     return;
 }
 
+/**
+ * @var PDOStatement $retrieveMangaStatement La requête préparée pour récupérer les informations du manga.
+ */
 $retrieveMangaStatement = $mysqlClient->prepare('SELECT * FROM mangas WHERE manga_id = :id');
 $retrieveMangaStatement->execute([
     'id' => (int)$getData['id'],
 ]);
+
+/**
+ * @var array|false $manga Le tableau associatif contenant les informations du manga, ou false si non trouvé.
+ */
 $manga = $retrieveMangaStatement->fetch(PDO::FETCH_ASSOC);
 
 // Vérifier que le manga existe
@@ -44,9 +55,8 @@ if (!isAdmin() && $manga['author'] !== $_SESSION['LOGGED_USER']['email']) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Site de mangas - Supprimer le manga ?</title>
     <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"rel="stylesheet">
-        <link href="style.css" rel="stylesheet">
-
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 </head>
 <body class="d-flex flex-column min-vh-100">
     <div class="container">

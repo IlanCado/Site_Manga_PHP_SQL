@@ -1,10 +1,12 @@
-
 <?php
 session_start();
 require_once(__DIR__ . '/config/mysql.php');
 require_once(__DIR__ . '/databaseconnect.php');
 
 // Récupération de l'ID du manga depuis l'URL
+/**
+ * @var array $getData Tableau contenant les paramètres GET de l'URL.
+ */
 $getData = $_GET;
 
 if (!isset($getData['id']) || !is_numeric($getData['id'])) {
@@ -12,11 +14,21 @@ if (!isset($getData['id']) || !is_numeric($getData['id'])) {
     return;
 }
 
+/**
+ * @var int $manga_id L'identifiant du manga, converti en entier.
+ */
 $manga_id = (int)$getData['id'];
 
 // Récupérer les informations du manga
+/**
+ * @var PDOStatement $retrievemangaStatement La requête préparée pour récupérer les informations du manga.
+ */
 $retrievemangaStatement = $mysqlClient->prepare('SELECT * FROM mangas WHERE manga_id = :id');
 $retrievemangaStatement->execute(['id' => $manga_id]);
+
+/**
+ * @var array|false $manga Le tableau associatif contenant les informations du manga, ou false si non trouvé.
+ */
 $manga = $retrievemangaStatement->fetch(PDO::FETCH_ASSOC);
 
 // Vérifier que le manga existe
@@ -26,14 +38,31 @@ if (!$manga) {
 }
 
 // Récupérer la moyenne des notes et le nombre de votes pour ce manga
+/**
+ * @var PDOStatement $ratingStatement La requête préparée pour récupérer la moyenne des notes et le nombre de votes.
+ */
 $ratingStatement = $mysqlClient->prepare('SELECT AVG(rating) as average_rating, COUNT(*) as vote_count FROM ratings WHERE manga_id = :manga_id');
 $ratingStatement->execute(['manga_id' => $manga_id]);
+
+/**
+ * @var array $ratingData Le tableau associatif contenant les informations sur la moyenne des notes et le nombre de votes.
+ */
 $ratingData = $ratingStatement->fetch(PDO::FETCH_ASSOC);
 
+/**
+ * @var float $averageRating La moyenne des notes, arrondie à une décimale.
+ */
 $averageRating = round($ratingData['average_rating'], 1);
+
+/**
+ * @var int $voteCount Le nombre total de votes pour ce manga.
+ */
 $voteCount = $ratingData['vote_count'];
 
 // Récupérer tous les commentaires pour ce manga, y compris le full_name des utilisateurs
+/**
+ * @var PDOStatement $commentsStatement La requête préparée pour récupérer les commentaires du manga.
+ */
 $commentsStatement = $mysqlClient->prepare(
     'SELECT comments.*, users.full_name FROM comments 
     JOIN users ON comments.user_id = users.user_id 
@@ -41,10 +70,24 @@ $commentsStatement = $mysqlClient->prepare(
     ORDER BY comments.created_at ASC'
 );
 $commentsStatement->execute(['manga_id' => $manga_id]);
+
+/**
+ * @var array $comments Le tableau associatif contenant tous les commentaires pour ce manga.
+ */
 $comments = $commentsStatement->fetchAll(PDO::FETCH_ASSOC);
 
 // Fonction pour récupérer les réponses aux commentaires, y compris le full_name des utilisateurs
+/**
+ * Récupère les réponses associées à un commentaire donné.
+ *
+ * @param PDO $mysqlClient La connexion à la base de données.
+ * @param int $comment_id L'identifiant du commentaire parent.
+ * @return array Un tableau contenant les réponses associées au commentaire.
+ */
 function fetchReplies($mysqlClient, $comment_id) {
+    /**
+     * @var PDOStatement $repliesStatement La requête préparée pour récupérer les réponses d'un commentaire.
+     */
     $repliesStatement = $mysqlClient->prepare(
         'SELECT comments.*, users.full_name FROM comments 
         JOIN users ON comments.user_id = users.user_id 
@@ -52,12 +95,23 @@ function fetchReplies($mysqlClient, $comment_id) {
         ORDER BY comments.created_at ASC'
     );
     $repliesStatement->execute(['comment_id' => $comment_id]);
+    
+    /**
+     * @var array $replies Le tableau associatif contenant toutes les réponses du commentaire.
+     */
     return $repliesStatement->fetchAll(PDO::FETCH_ASSOC);
 }
 
 // Récupérer l'utilisateur correspondant à l'auteur
+/**
+ * @var PDOStatement $userStatement La requête préparée pour récupérer les informations de l'auteur du manga.
+ */
 $userStatement = $mysqlClient->prepare('SELECT full_name FROM users WHERE email = :email');
 $userStatement->execute(['email' => $manga['author']]);
+
+/**
+ * @var array|false $user Le tableau associatif contenant les informations de l'auteur, ou false si non trouvé.
+ */
 $user = $userStatement->fetch(PDO::FETCH_ASSOC);
 ?>
 

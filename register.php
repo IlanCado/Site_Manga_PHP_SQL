@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $existingEmail = $checkEmailStatement->fetch(PDO::FETCH_ASSOC);
 
     if ($existingEmail) {
-        $errorMessage = "Cet email est déjà utilisé. Veuillez en choisir un autre.";
+        $errorMessage = "Les informations fournies sont incorrectes.";
     }
 
     // Vérifier si le nom d'utilisateur existe déjà
