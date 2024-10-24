@@ -22,6 +22,9 @@
                         <a class="nav-link" href="login.php">Connexion</a>
                     </li>
                 <?php endif; ?>
+                <li class="nav-item">
+                        <a class="nav-link" href="contact.php">contact</a>
+                    </li>
             </ul>
 
             <!-- Section à droite pour afficher "Bonjour, (nom d'utilisateur)" si connecté -->

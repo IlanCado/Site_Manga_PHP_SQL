@@ -1,0 +1,142 @@
+Cahier des Charges : Site de Gestion de Mangas
+
+1. Introduction
+
+Le projet consiste en la création d'un site web de gestion de mangas permettant aux utilisateurs de découvrir, créer, modifier des mangas, de laisser des commentaires, de noter des mangas, ainsi que de contacter les administrateurs via un formulaire de contact. Ce document définit toutes les spécifications fonctionnelles, techniques, et de design du projet pour en assurer le développement et la mise en œuvre.
+
+2. Objectifs du Projet
+
+Créer une plateforme permettant la consultation des fiches de mangas.
+
+Permettre aux utilisateurs de créer des mangas, de laisser des commentaires, des notes, et des évaluations sur les mangas.
+
+Offrir un espace d'administration où les responsables peuvent gérer les mangas et les commentaires.
+
+Fournir une fonctionnalité de contact pour que les utilisateurs puissent envoyer des messages aux administrateurs, éventuellement avec des captures d'écran.
+
+3. Fonctionnalités
+
+3.1 Frontend (Côté Utilisateur)
+
+Page d'accueil : Liste des mangas avec titre, auteur, et synopsis, et navigation intuitive.
+
+Page de détail d'un manga : Affichage des détails d'un manga (titre, synopsis, auteur, couverture, note moyenne).
+
+Espace de création de mangas : Page permettant aux utilisateurs de créer de nouvelles fiches de mangas.
+
+Notation et commentaires : Possibilité pour les utilisateurs de laisser une note (1 à 5 étoiles) et un commentaire.
+
+Formulaire de contact : Page pour contacter les administrateurs, avec champ email, message, et possibilité de joindre une capture d'écran.
+
+Connexion / Inscription : Inscription d'un nouvel utilisateur et connexion des utilisateurs existants.
+
+3.2 Backend (Administration)
+
+Gestion des mangas : Création, modification, et suppression des mangas par les administrateurs.
+
+Gestion des Commentaires : Création, modification, et suppression des commentaires par les administrateurs.
+
+3.3 Gestion par les Utilisateurs
+
+Création et Gestion des Mangas : Les utilisateurs peuvent créer de nouvelles fiches de mangas, les modifier et les supprimer.
+
+Consultation, Notation et Commentaires : Les utilisateurs peuvent consulter, noter et commenter les mangas.
+
+4. Architecture du Système
+
+Le projet est basé sur une architecture PHP MySQL avec une séparation partielle des responsabilités entre les différentes parties de l'application.
+
+4.1 Modèle
+
+Base de données MySQL :
+
+Tables : Le projet utilise une base de données MySQL qui contient des tables pour gérer les utilisateurs, les mangas, les commentaires, les notes, et les messages de contact.
+
+Scripts SQL : Le fichier partage_de_mangas.sql est utilisé pour créer les tables et insérer les données nécessaires.
+
+4.2 Vue
+
+HTML5/CSS3 : Le projet utilise HTML et CSS pour le rendu des pages.
+
+Bootstrap : Certaines pages utilisent le framework Bootstrap pour la mise en page et la responsivité.
+
+Inclusion de composants :
+
+Les fichiers header.php et footer.php sont utilisés pour l'inclusion de l'entête et du pied de page, permettant ainsi une meilleure réutilisation du code.
+
+4.3 Contrôleur
+
+PHP : La logique applicative est écrite principalement en PHP.
+
+Fichiers PHP individuels : Chaque action (telle que manga_create.php, manga_post_create.php, delete_comment.php, etc.) est gérée par un fichier PHP dédié, ce qui implique une architecture orientée page.
+
+Gestion des formulaires : Les interactions utilisateurs telles que la création de mangas, les commentaires, et les évaluations sont gérées par des scripts PHP spécifiques (par exemple, submit_comment.php, submit_contact.php).
+
+4.4 Organisation du Code
+
+Fichiers et Dossiers :
+
+Frontend : Les fichiers .php tels que index.php, contact.php, et manga_detail.php sont utilisés pour le frontend de l'application.
+
+Backend : Les fonctionnalités d'administration sont intégrées dans les mêmes fichiers avec des vérifications de rôle (par exemple, isAdmin()).
+
+Uploads : Les fichiers téléchargés, tels que les images pour les mangas, sont stockés dans le dossier uploads.
+
+5. Spécifications Fonctionnelles
+
+5.1 Gestion des Mangas
+
+CRUD des Mangas : Les administrateurs peuvent modifier et supprimer des fiches de mangas. Les utilisateurs peuvent ajouter, consulter, modifier, et supprimer leurs propres fiches de mangas.
+
+Champs obligatoires : Titre, Auteur, Synopsis, Image de couverture.
+
+Validation : Le titre doit avoir entre 3 et 50 caractères, le synopsis entre 10 et 500 caractères.
+
+5.2 Commentaires et Notations
+
+Notation des Mangas : Chaque manga peut être noté de 1 à 5 étoiles par les utilisateurs connectés.
+
+Ajout de Commentaires : Les utilisateurs peuvent ajouter des commentaires, les modifier, ou les supprimer.
+
+Validation : Les commentaires doivent avoir entre 1 et 300 caractères.
+
+5.3 Formulaire de Contact
+
+Champs : Email, Message, Capture d'écran (facultative).
+
+Validation : Email valide, message non vide.
+
+Notification Admin : Les messages sont transmis aux administrateurs via email et sauvegardés dans la base de données.
+
+5.4 Gestion des Utilisateurs
+
+Rôle Admin : Les administrateurs peuvent supprimer les utilisateurs, les mangas créés par les autres utilisateurs, et les commentaires.
+
+Gestion des Comptes : Possibilité pour les utilisateurs de supprimer leur compte.
+
+6. Contraintes Techniques
+
+Environnement de Développement : PHP 8, MySQL, Apache (via XAMPP ou WAMP).
+
+Framework CSS : Bootstrap 5 pour garantir la responsivité.
+
+Normes de Sécurité :
+
+Utilisation de requêtes préparées pour éviter les injections SQL.
+
+Validation et sanitation des entrées utilisateurs (éviter XSS).
+
+Protection des routes sensibles (administration).
+
+7. Livrables
+
+Code source du site, incluant les fichiers PHP, CSS, JS.
+
+Base de données : Script SQL pour créer les tables nécessaires.
+
+Documentation : Incluant le guide d'installation, la description des fonctionnalités et des tests.
+
+8. Conclusion
+
+Le site de gestion de mangas visera à offrir une expérience utilisateur optimale tout en permettant aux administrateurs de gérer efficacement le contenu et les interactions. Grâce à une architecture claire et des tests exhaustifs, ce projet pourra évoluer facilement en intégrant de nouvelles fonctionnalités selon les besoins des utilisateurs.
+

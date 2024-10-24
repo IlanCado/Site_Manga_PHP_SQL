@@ -56,6 +56,8 @@ if (isset($_FILES['screenshot']) && $_FILES['screenshot']['error'] === 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Site de mangas - Contact reçu</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+
 </head>
 <body>
     <div class="container">
@@ -69,11 +71,12 @@ if (isset($_FILES['screenshot']) && $_FILES['screenshot']['error'] === 0) {
                 <p class="card-text"><b>Email</b> : <?php echo($postData['email']); ?></p>
                 <p class="card-text"><b>Message</b> : <?php echo(strip_tags($postData['message'])); ?></p>
                 <?php if ($isFileLoaded) : ?>
-                    <div class="alert alert-success" role="alert">
-                        L'envoi a bien été effectué !
-                    </div>
-                <?php endif; ?>
             </div>
+                <?php endif; ?>
+        </div>
+    </div>
+    <div class="mt-4">
+            <a href="index.php" class="btn btn-primary">Retour à l'accueil</a>
         </div>
     </div>
 </body>
