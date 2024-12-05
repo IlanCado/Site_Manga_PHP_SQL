@@ -29,8 +29,8 @@ if (!$comment) {
     exit();
 }
 
-// Vérification si l'utilisateur est l'auteur ou un administrateur
-if ($comment['user_id'] === $_SESSION['LOGGED_USER']['user_id'] || $_SESSION['LOGGED_USER']['role'] === 'admin') {
+// Vérification si l'utilisateur est l'auteur ou un modérateur
+if ($comment['user_id'] === $_SESSION['LOGGED_USER']['user_id'] || $_SESSION['LOGGED_USER']['role'] === 'moderator') {
     // Mettre à jour le commentaire
     $updateStatement = $mysqlClient->prepare('UPDATE comments SET content = :content WHERE comment_id = :comment_id');
     $updateStatement->execute(['content' => $content, 'comment_id' => $comment_id]);

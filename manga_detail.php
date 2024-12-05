@@ -196,7 +196,7 @@ $user = $userStatement->fetch(PDO::FETCH_ASSOC);
                 <button class="btn btn-sm btn-outline-primary" onclick="toggleReplyForm(<?php echo $comment['comment_id']; ?>)">Répondre</button>
                 <button class="btn btn-sm btn-outline-secondary" onclick="toggleReplies(<?php echo $comment['comment_id']; ?>)">Voir les réponses</button>
 
-                <?php if (isset($_SESSION['LOGGED_USER']) && ($comment['user_id'] === $_SESSION['LOGGED_USER']['user_id'] || $_SESSION['LOGGED_USER']['role'] === 'admin')): ?>
+                <?php if (isset($_SESSION['LOGGED_USER']) && ($comment['user_id'] === $_SESSION['LOGGED_USER']['user_id'] || $_SESSION['LOGGED_USER']['role'] === 'moderator')): ?>
                     <!-- Bouton pour éditer -->
                     <button class="btn btn-sm btn-outline-warning" onclick="toggleEditForm(<?php echo $comment['comment_id']; ?>)">Éditer</button>
                     
